@@ -20,7 +20,7 @@
           aria-labelledby="offcanvasNavbarLabel"
         >
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
             <button
               type="button"
               class="btn-close"
@@ -39,6 +39,18 @@
                 <RouterLink to="/about" class="nav-link" active-class="active"
                   >About</RouterLink
                 >
+              </li>
+              <li class="nav-item d-flex">
+                <RouterLink to="/post" class="nav-link" active-class="active"
+                  >게시글</RouterLink
+                >
+                <button
+                  class="btn btn-outline-success ms-2"
+                  type="button"
+                  @click="goPage"
+                >
+                  글쓰기
+                </button>
               </li>
             </ul>
             <!-- <form class="d-flex mt-3" role="search">
@@ -59,6 +71,13 @@
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const goPage = () => {
+  router.push({ name: 'PostsCreate' });
+};
+</script>
 
 <style lang="scss" scoped></style>
