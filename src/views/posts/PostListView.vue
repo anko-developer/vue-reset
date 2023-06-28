@@ -13,6 +13,8 @@
       </div>
     </div>
   </div>
+  <hr class="my-4" />
+  <PostDetailView :id="1"></PostDetailView>
 </template>
 
 <script setup>
@@ -20,6 +22,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPosts } from '@/api/posts';
 import PostItem from '@/components/posts/PostItem.vue';
+import PostDetailView from '@/views/posts/PostDetailView.vue';
 
 const router = useRouter();
 const posts = ref([]);
@@ -30,7 +33,6 @@ const fetchPosts = () => {
 fetchPosts();
 
 const goPage = id => {
-  // router.push(`/posts/${id}`);
   router.push({
     name: 'PostDetail',
     params: {

@@ -52,6 +52,11 @@
                   글쓰기
                 </button>
               </li>
+              <li class="nav-item">
+                <RouterLink to="/nested" class="nav-link" active-class="active"
+                  >Nested</RouterLink
+                >
+              </li>
             </ul>
             <!-- <form class="d-flex mt-3" role="search">
               <input

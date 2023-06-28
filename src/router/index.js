@@ -26,11 +26,39 @@ const routes = [
     path: '/post/:id',
     name: 'PostDetail',
     component: () => import('@/views/posts/PostDetailView.vue'),
+    props: route => ({ id: parseInt(route.params.id) }),
   },
   {
     path: '/post/:id/edit',
     name: 'PostEdit',
     component: () => import('@/views/posts/PostEditView.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/NotFoundView.vue'),
+  },
+  {
+    path: '/nested',
+    name: 'Nested',
+    component: () => import('@/views/nested/NestedView.vue'),
+    children: [
+      {
+        path: '',
+        name: 'NestedHome',
+        component: () => import('@/views/nested/NestedHome.vue'),
+      },
+      {
+        path: 'one',
+        name: 'NestedOne',
+        component: () => import('@/views/nested/NestedOne.vue'),
+      },
+      {
+        path: 'two',
+        name: 'NestedTwo',
+        component: () => import('@/views/nested/NestedTwo.vue'),
+      },
+    ],
   },
 ];
 
