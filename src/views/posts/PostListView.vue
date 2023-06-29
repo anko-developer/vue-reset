@@ -13,6 +13,23 @@
       </div>
     </div>
   </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
   <hr class="my-4" />
   <PostDetailView :id="1"></PostDetailView>
 </template>
@@ -26,9 +43,18 @@ import PostDetailView from '@/views/posts/PostDetailView.vue';
 
 const router = useRouter();
 const posts = ref([]);
+const prarams = ref({
+  _sort: 'createdAt',
+  _order: 'desc',
+});
 
-const fetchPosts = () => {
-  posts.value = getPosts();
+const fetchPosts = async () => {
+  try {
+    const { data } = await getPosts(prarams.value);
+    posts.value = data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 fetchPosts();
 

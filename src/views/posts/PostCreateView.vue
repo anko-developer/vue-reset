@@ -6,6 +6,7 @@
       <div class="mb-3">
         <label for="title" class="form-label"> 제목 </label>
         <input
+          v-model="form.title"
           type="text"
           class="form-control"
           id="text"
@@ -14,7 +15,12 @@
       </div>
       <div class="mb-3">
         <label for="contents" class="form-label"> 내용 </label>
-        <textarea class="form-control" id="contents" rows="3"></textarea>
+        <textarea
+          v-model="form.content"
+          class="form-control"
+          id="contents"
+          rows="3"
+        ></textarea>
       </div>
       <div class="pt-4">
         <button
@@ -24,16 +30,35 @@
         >
           목록
         </button>
-        <button class="btn btn-primary">저장</button>
+        <button @click="save" class="btn btn-primary">저장</button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { createPost } from '@/api/posts';
 
 const router = useRouter();
+const form = ref({
+  title: null,
+  content: null,
+});
+const save = async () => {
+  try {
+    await createPost({
+      ...form.value,
+      createdAt: Date.now(),
+    });
+    router.push({
+      name: 'Post',
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 const goListPage = () => {
   router.push({
     name: 'Post',
