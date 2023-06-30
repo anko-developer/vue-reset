@@ -30,13 +30,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPostById, deletePost } from '@/api/posts';
 
 const props = defineProps({
   id: {
-    type: Number,
+    type: String,
   },
 });
 

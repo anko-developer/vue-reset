@@ -26,7 +26,8 @@ const routes = [
     path: '/post/:id',
     name: 'PostDetail',
     component: () => import('@/views/posts/PostDetailView.vue'),
-    props: route => ({ id: parseInt(route.params.id) }),
+    props: true,
+    // props: route => ({ id: parseInt(route.params.id) }),
   },
   {
     path: '/post/:id/edit',
