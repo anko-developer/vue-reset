@@ -36,7 +36,7 @@ import { getPostById, deletePost } from '@/api/posts';
 
 const props = defineProps({
   id: {
-    type: String,
+    type: [String, Number],
   },
 });
 

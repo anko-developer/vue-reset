@@ -2,22 +2,22 @@
   <div>
     <h2>게시글 목록</h2>
     <hr class="my-4" />
-    <form @submit.prevent>
-      <div class="row g-3">
-        <div class="col">
-          <input v-model="params.title_like" type="text" class="form-control">
-        </div>
-        <div class="col-3">
-          <select v-model="params._limit" name="" id="" class="form-select">
-            <option value="3">3개씩</option>
-            <option value="6">6개씩</option>
-            <option value="9">9개씩</option>
-          </select>
-        </div>
-      </div>
-    </form>
+    <PostFilter
+      v-model:title="params.title_like"
+      v-model:limit="params._limit"
+    />
     <hr class="my-4" />
-    <div class="row g-3">
+    <AppGrid :items="posts">
+      <template v-slot="{ item }">
+        <PostItem
+          :title="item.title"
+          :content="item.content"
+          :created-at="item.createdAt"
+          @click="goPage(item.id)"
+        />
+      </template>
+    </AppGrid>
+    <!-- <div class="row g-3">
       <div v-for="post in posts" :key="post.id" class="col-4">
         <PostItem
           :title="post.title"
@@ -26,27 +26,13 @@
           @click="goPage(post.id)"
         />
       </div>
-    </div>
+    </div> -->
   </div>
-  <nav class="mt-5" aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item" :class="{ disabled: !(params._page > 1) }">
-        <a class="page-link" href="#" aria-label="Previous" @click.prevent="pagePrev">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li v-for="page in pageCount" class="page-item" :class="{ active: params._page === page  }">
-        <a class="page-link" href="#" @click.prevent="pageGo(page)">{{ page }}</a>
-      </li>
-      <li class="page-item" :class="{ disabled: params._page >= pageCount }">
-        <a class="page-link" href="#" aria-label="Next" @click.prevent="pageNext">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <hr class="my-5" />
-  <PostDetailView :id="1"></PostDetailView>
+  <AppPagination
+    :current-page="params._page"
+    :page-count="pageCount"
+    @page="page => (params._page = page)"
+  />
 </template>
 
 <script setup>
@@ -54,7 +40,9 @@ import { ref, computed, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPosts } from '@/api/posts';
 import PostItem from '@/components/posts/PostItem.vue';
-import PostDetailView from '@/views/posts/PostDetailView.vue';
+import PostFilter from '@/components/posts/PostFilter.vue';
+import AppGrid from '@/components/AppGrid.vue';
+import AppPagination from '@/components/AppPagination.vue';
 
 const router = useRouter();
 const posts = ref([]);
@@ -63,7 +51,7 @@ const params = ref({
   _order: 'desc',
   _page: 1,
   _limit: 3,
-  title_like: ''
+  title_like: '',
 });
 
 // pagination
@@ -71,17 +59,6 @@ const totalCount = ref(0);
 const pageCount = computed(() => {
   return Math.ceil(totalCount.value / params.value._limit);
 });
-
-const pageGo = (page) => {
-  params.value._page = page;
-};
-
-const pageNext = () => {
-  params.value._page += 1; 
-};
-const pagePrev = () => {
-  params.value._page -= 1; 
-};
 
 const fetchPosts = async () => {
   try {
