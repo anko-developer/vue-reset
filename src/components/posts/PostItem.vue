@@ -1,16 +1,27 @@
 <template>
-  <div class="card">
-    <div class="card-body">
+  <AppCard>
+    <template #header>
       <h5 class="card-title">{{ title }}</h5>
-      <p class="card-text">
-        {{ content }}
-      </p>
-      <p class="text-muted">{{ createdAt }}</p>
-    </div>
-  </div>
+    </template>
+
+    <p class="card-text">
+      {{ content }}
+    </p>
+    <p class="text-muted">{{ createdAt }}</p>
+
+    <template #footer>
+      <div class="d-flex flex-row-reverse">
+        <button class="btn p-0" type="button" @click.stop="modal">
+          <i class="bi bi-apple"></i>
+        </button>
+      </div>
+    </template>
+  </AppCard>
 </template>
 
 <script setup>
+import AppCard from '../AppCard.vue';
+
 defineProps({
   title: {
     type: String,
@@ -23,5 +34,10 @@ defineProps({
     type: [String, Number],
   },
 });
-</script>
 
+const emit = defineEmits(['modal']);
+
+const modal = () => {
+  emit('modal');
+};
+</script>
