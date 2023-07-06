@@ -8,13 +8,13 @@
   <AppGrid :items="items" v-slot="{ item }" col-class="col-3">
     <div>{{ item }}</div>
   </AppGrid>
+  <h2>{{ person.name }}</h2>
+  <button @click="person.say">클릭</button>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
-import AppGrid from '@/components/AppGrid.vue';
 
 const router = useRouter();
 const goAboutPage = () => {

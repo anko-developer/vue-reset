@@ -25,7 +25,6 @@
 
 <script setup>
 import { computed } from 'vue';
-import AppModal from '../AppModal.vue';
 
 const props = defineProps({
   show: Boolean,

@@ -47,8 +47,6 @@ import { getPosts } from '@/api/posts';
 import PostItem from '@/components/posts/PostItem.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
 import PostModal from '@/components/posts/PostModal.vue';
-import AppGrid from '@/components/AppGrid.vue';
-import AppPagination from '@/components/AppPagination.vue';
 
 const router = useRouter();
 const posts = ref([]);
