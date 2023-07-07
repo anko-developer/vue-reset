@@ -7,7 +7,10 @@
         <div class="col-3 text-muted">내용</div>
         <div class="col-9">{{ modalData.content }}</div>
         <div class="col-3 text-muted">등록일</div>
-        <div class="col-9">{{ modalData.createdAt }}</div>
+
+        <div class="col-9">
+          {{ $dayjs(modalData.createdAtt).format('YYYY. MM. DD HH:mm:ss') }}
+        </div>
       </div>
     </template>
     <template #actions>

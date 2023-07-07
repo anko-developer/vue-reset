@@ -7,7 +7,7 @@
     <p class="card-text">
       {{ content }}
     </p>
-    <p class="text-muted">{{ createdAt }}</p>
+    <p class="text-muted">{{ createdDate }}</p>
 
     <template #footer>
       <div class="d-flex flex-row-reverse">
@@ -20,7 +20,8 @@
 </template>
 
 <script setup>
-defineProps({
+import { inject, computed } from 'vue';
+const props = defineProps({
   title: {
     type: String,
     required: true,
@@ -38,4 +39,9 @@ const emit = defineEmits(['modal']);
 const modal = () => {
   emit('modal');
 };
+
+const dayjs = inject('dayjs');
+const createdDate = computed(() =>
+  dayjs(props.createdAt).format('YYYY. MM. DD HH:mm:ss'),
+);
 </script>
