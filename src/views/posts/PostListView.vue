@@ -7,6 +7,10 @@
       v-model:limit="params._limit"
     />
     <hr class="my-4" />
+
+    <AppLoading />
+    <AppError message="Erroor!" />
+
     <AppGrid :items="posts">
       <template v-slot="{ item }">
         <PostItem
@@ -18,16 +22,6 @@
         />
       </template>
     </AppGrid>
-    <!-- <div class="row g-3">
-      <div v-for="post in posts" :key="post.id" class="col-4">
-        <PostItem
-          :title="post.title"
-          :content="post.content"
-          :created-at="post.createdAt"
-          @click="goPage(post.id)"
-        />
-      </div>
-    </div> -->
   </div>
   <AppPagination
     :current-page="params._page"
@@ -50,6 +44,8 @@ import PostModal from '@/components/posts/PostModal.vue';
 
 const router = useRouter();
 const posts = ref([]);
+const error = ref(null);
+const loading = ref(false);
 const params = ref({
   _sort: 'createdAt',
   _order: 'desc',
