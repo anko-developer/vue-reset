@@ -11,8 +11,11 @@
 
     <template #footer>
       <div class="d-flex flex-row-reverse">
-        <button class="btn p-0" type="button" @click.stop="modal">
+        <button class="btn p-1" type="button" @click.stop="modal">
           <i class="bi bi-apple"></i>
+        </button>
+        <button class="btn p-1" type="button" @click.stop="preview">
+          <i class="bi bi-app"></i>
         </button>
       </div>
     </template>
@@ -34,10 +37,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(['modal']);
+const emit = defineEmits(['modal', 'preview']);
 
 const modal = () => {
   emit('modal');
+};
+
+const preview = () => {
+  emit('preview');
 };
 
 const dayjs = inject('dayjs');
